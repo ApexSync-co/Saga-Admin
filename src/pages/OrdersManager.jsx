@@ -325,7 +325,7 @@ export default function OrdersManager({ showToast }) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="form-input"
-            style={{ marginBottom: 0, minWidth: '200px', flex: '1 1 200px' }}
+            style={{ marginBottom: 0, minWidth: '280px', flex: '1 1 280px' }}
           />
           <div className="stat-card" style={{ padding: '8px 16px', marginBottom: 0 }}>
              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Partner:</span>
