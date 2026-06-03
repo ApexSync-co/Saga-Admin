@@ -8,7 +8,7 @@ const getStoreProductUrl = (productId) => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return `http://localhost:5173/product/${productId}`;
   }
-  return `https://saga-jewelry.vercel.app/product/${productId}`;
+  return `https://shopwithsaga.vercel.app/product/${productId}`;
 };
 
 export default function OrdersManager({ showToast }) {
