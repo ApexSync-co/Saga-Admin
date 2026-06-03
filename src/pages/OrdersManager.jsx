@@ -951,7 +951,8 @@ export default function OrdersManager({ showToast }) {
                   style={{ width: '100%', padding: '14px' }} 
                   onClick={() => handleUpdateStatus(
                     selectedOrder.id, 
-                    selectedOrder.status === 'Ready to Ship' ? 'Shipped' : 'Out for Delivery'
+                    selectedOrder.status === 'Ready to Ship' ? 'Shipped' : 'Out for Delivery',
+                    selectedOrder.awbNumber || selectedOrder.trackingId || selectedOrder.awb
                   )}
                 >
                   {selectedOrder.status === 'Ready to Ship' ? 'Mark as Shipped' : 'Mark Out for Delivery'}
