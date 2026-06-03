@@ -151,6 +151,15 @@ export default function OrdersManager({ showToast }) {
     try {
       const awb = await createConsignment(order);
       showToast(`Consignment booked! AWB: ${awb}`);
+      
+      // Forcefully update the AWB in Firestore so it's instantly available
+      await updateOrderStatus(order.id, {
+        status: 'Ready to Ship',
+        awbNumber: awb,
+        trackingId: awb,
+        courier: 'DTDC'
+      });
+
       // Reload so the modal reflects the new awbNumber & Shipped status
       const freshOrders = await fetchAllOrders();
       setOrders(freshOrders);
