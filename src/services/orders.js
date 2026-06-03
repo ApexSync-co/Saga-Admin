@@ -95,9 +95,9 @@ export async function updateOrderStatus(orderId, updates) {
 /**
  * Generate and download shipping label from backend
  * @param {string} awb - The AWB/tracking number
- * @param {string} labelCode - e.g., 'SHIP_LABEL_4X6', 'SHIP_LABEL_A4'
+ * @param {string} labelCode - e.g., 'SHIP_LABEL_A4'
  */
-export async function generateShippingLabel(awb, labelCode = 'SHIP_LABEL_4X6') {
+export async function generateShippingLabel(awb, labelCode = 'SHIP_LABEL_A4') {
   try {
     const DELIVERY_BACKEND_URL = import.meta.env.VITE_DELIVERY_BACKEND_URL || 'http://localhost:5001';
     const url = `${DELIVERY_BACKEND_URL}/generate-label?awb=${awb}&label_code=${labelCode}&label_format=pdf`;
