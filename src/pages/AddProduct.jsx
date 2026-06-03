@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { addProduct, updateProduct } from '../services/products';
 
 const CATEGORIES = [
-  'Bangles',
+  'Anklets',
   'Bracelets',
   'Earrings',
   'Necklaces',
@@ -127,7 +127,7 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
               type="text"
               name="name"
               className="form-input"
-              placeholder="e.g. Gold Filigree Bangle"
+              placeholder="e.g. Gold Filigree Anklet"
               value={form.name}
               onChange={handleChange}
               required

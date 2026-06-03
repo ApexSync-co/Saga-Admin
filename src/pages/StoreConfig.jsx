@@ -5,7 +5,7 @@ const CATEGORY_DEFAULTS = [
     { id: 'sets', name: 'Sets', image: '/Sets.jpg', subtitle: 'Complete heritage ensembles', position: 'center', fit: 'cover', scale: 1 },
     { id: 'necklaces', name: 'Necklaces', image: '/Necklace.jpeg', subtitle: 'Majestic neckpieces', position: 'center', fit: 'cover', scale: 1 },
     { id: 'earrings', name: 'Earrings', image: '/stock3.jpeg', subtitle: 'Radiance for your ears', position: 'center', fit: 'cover', scale: 1 },
-    { id: 'bangles', name: 'Bangles', image: '/Bangles.png', subtitle: 'Exquisite wrist adornments', position: 'center', fit: 'cover', scale: 1 },
+    { id: 'anklets', name: 'Anklets', image: '/Bangles.png', subtitle: 'Exquisite ankle adornments', position: 'center', fit: 'cover', scale: 1 },
     { id: 'bracelets', name: 'Bracelets', image: '/Bracelets.jpeg', subtitle: 'Elegant modern classics', position: 'center', fit: 'cover', scale: 1 },
     { id: 'pendants', name: 'Pendants', image: '/Pendant.jpeg', subtitle: 'Heartfelt brilliance', position: 'center', fit: 'cover', scale: 1 },
     { id: 'rings', name: 'Rings', image: '/Rings.jpeg', subtitle: 'Symbols of eternity', position: 'center', fit: 'cover', scale: 1 },
