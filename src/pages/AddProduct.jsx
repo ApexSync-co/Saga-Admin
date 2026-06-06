@@ -26,8 +26,9 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
     weight: '',
     sizes: '', // e.g. "6, 7, 8" or "Standard"
     stock: '',
-    metalColor: 'Yellow',
+    color: 'Yellow',
     gemstones: 'None',
+    type: '',
   });
   const [saving, setSaving] = useState(false);
 
@@ -35,7 +36,7 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
     if (editProduct) {
       setForm({
         name: editProduct.name || '',
-        price: editProduct.price?.toString() || '',
+        price: editProduct.price ? Math.max(0, Number(editProduct.price) - 30).toString() : '',
         category: editProduct.category || CATEGORIES[0],
         description: editProduct.description || '',
         imageUrl: editProduct.imageUrl || '',
@@ -45,8 +46,9 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
         weight: editProduct.weight || '',
         sizes: editProduct.sizes || '',
         stock: editProduct.stock?.toString() || '',
-        metalColor: editProduct.metalColor || 'Yellow',
+        color: editProduct.color || editProduct.metalColor || 'Yellow',
         gemstones: editProduct.gemstones || 'None',
+        type: editProduct.type || '',
       });
     }
   }, [editProduct]);
@@ -87,7 +89,8 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
     setSaving(true);
     try {
       const filteredMedia = form.media.filter(item => item.url.trim() !== '');
-      const submissionData = { ...form, media: filteredMedia };
+      const finalPrice = Number(form.price) + 30;
+      const submissionData = { ...form, price: finalPrice, media: filteredMedia };
 
       if (editProduct) {
         await updateProduct(editProduct.id, submissionData);
@@ -136,7 +139,7 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Price (₹) *</label>
+              <label className="form-label">Base Price (₹) *</label>
               <input
                 type="number"
                 name="price"
@@ -148,6 +151,9 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
                 step="1"
                 required
               />
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '6px' }}>
+                Final listed price: ₹{form.price ? Number(form.price) + 30 : 30} (+₹30 markup)
+              </div>
             </div>
 
             <div className="form-group">
@@ -165,6 +171,27 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
               </select>
             </div>
           </div>
+
+          {form.category === 'Earrings' && (
+            <div className="form-group">
+              <label className="form-label">Type</label>
+              <select
+                name="type"
+                className="form-select"
+                value={form.type}
+                onChange={handleChange}
+              >
+                <option value="">Select Type</option>
+                <option value="Hoops">Hoops</option>
+                <option value="Gold Plated">Gold Plated</option>
+                <option value="Black Metal">Black Metal</option>
+                <option value="Rose Gold">Rose Gold</option>
+                <option value="Traditional">Traditional</option>
+                <option value="Simple">Simple</option>
+                <option value="Long">Long</option>
+              </select>
+            </div>
+          )}
 
           <div style={{ margin: '24px 0 16px', paddingBottom: 8, borderBottom: '1px solid var(--border)', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)' }}>
             PRODUCT SPECIFICATIONS
@@ -223,15 +250,15 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Metal Color</label>
+              <label className="form-label">Color</label>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <select 
-                  name="metalColor" 
+                  name="color" 
                   className="form-select" 
-                  value={['Yellow', 'Silver', 'Rose Gold', 'Antique'].includes(form.metalColor) ? form.metalColor : 'Other'} 
+                  value={['Yellow', 'Silver', 'Rose Gold', 'Antique'].includes(form.color) ? form.color : 'Other'} 
                   onChange={(e) => {
                     if (e.target.value === 'Other') {
-                      setForm(prev => ({ ...prev, metalColor: '' }));
+                      setForm(prev => ({ ...prev, color: '' }));
                     } else {
                       handleChange(e);
                     }
@@ -244,13 +271,13 @@ export default function AddProduct({ editProduct, onSave, onCancel, showToast })
                   <option value="Other">Other (Custom)</option>
                 </select>
                 
-                {(!['Yellow', 'Silver', 'Rose Gold', 'Antique'].includes(form.metalColor) || form.metalColor === '') && (
+                {(!['Yellow', 'Silver', 'Rose Gold', 'Antique'].includes(form.color) || form.color === '') && (
                   <input
                     type="text"
-                    name="metalColor"
+                    name="color"
                     className="form-input"
                     placeholder="Enter custom color (e.g. Copper Finish)"
-                    value={form.metalColor}
+                    value={form.color}
                     onChange={handleChange}
                     autoFocus
                   />
