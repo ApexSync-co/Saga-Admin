@@ -57,6 +57,18 @@ export async function fetchAllOrders() {
  * @param {Object} updates - { status, trackingId, courier }
  */
 export async function updateOrderStatus(orderId, updates) {
+  let directUpdateSuccess = false;
+  try {
+    const docRef = doc(db, ORDERS_COLLECTION, orderId);
+    await updateDoc(docRef, {
+      ...updates,
+      updatedAt: new Date()
+    });
+    directUpdateSuccess = true;
+  } catch (dbErr) {
+    console.error("Direct Firestore update failed:", dbErr);
+  }
+
   try {
     const response = await fetch(`${BACKEND_URL}/update-order-status`, {
       method: 'POST',
@@ -77,18 +89,11 @@ export async function updateOrderStatus(orderId, updates) {
 
     return true;
   } catch (error) {
-    console.error("Error updating order:", error);
-    // Fallback to direct Firestore update
-    try {
-        const docRef = doc(db, ORDERS_COLLECTION, orderId);
-        await updateDoc(docRef, {
-          ...updates,
-          updatedAt: new Date()
-        });
-        return true;
-    } catch (e) {
-        throw error;
+    console.error("Error updating order via backend:", error);
+    if (directUpdateSuccess) {
+      return true;
     }
+    throw error;
   }
 }
 
