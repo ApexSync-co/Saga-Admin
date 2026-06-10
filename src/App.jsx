@@ -93,6 +93,27 @@ function App() {
     return <Login showToast={showToast} />;
   }
 
+  // Admin Access Check
+  // You can define a comma-separated list of allowed admin emails in your .env file
+  // e.g., VITE_ADMIN_EMAILS=admin@saga.com,myemail@gmail.com
+  const allowedEmails = (import.meta.env.VITE_ADMIN_EMAILS || 'admin@saga.com')
+    .split(',')
+    .map(email => email.trim().toLowerCase());
+
+  if (user && user.email && !allowedEmails.includes(user.email.toLowerCase())) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-dark)' }}>
+        <h2 style={{ color: '#ef4444', marginBottom: '16px' }}>Access Denied</h2>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '24px' }}>
+          Your account ({user.email}) does not have administrator privileges.
+        </p>
+        <button onClick={handleLogout} className="btn" style={{ background: '#ef4444', color: 'white' }}>
+          Log Out
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="app-container">
       {/* Mobile Top Bar */}
